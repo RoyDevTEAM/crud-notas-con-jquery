@@ -1,0 +1,25 @@
+{
+  "students": [
+    {
+      "id": 1,
+      "nombre": "Juan",
+      "apellido": "Pérez",
+      "ci": "12345678",
+      "correo": "juan@example.com"
+    },
+    {
+      "id": 2,
+      "nombre": "María",
+      "apellido": "Gómez",
+      "ci": "87654321",
+      "correo": "maria@example.com"
+    },
+    {
+      "id": 3,
+      "nombre": "Carlos",
+      "apellido": "López",
+      "ci": "55555555",
+      "correo": "carlos@example.com"
+    }
+  ]
+}

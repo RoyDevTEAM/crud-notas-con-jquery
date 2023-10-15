@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+
+  <title>Comprobante de Registro de Materia</title>
+  <link rel="icon" href="img/favicon.ico" sizes="32x32"/>
+
+  <link rel="stylesheet" href="assets/css/cc.css">
+</head>
+<body>
+
+<div class="comprobante">
+  <div class="comprobante-header">
+    <h3>Comprobante de Registro de Materia</h3>
+  </div>
+  <div class="comprobante-content">
+    <p id="estudiante"></p>
+    <p id="idEstudiante"></p>
+    <p id="materia"></p>
+  </div>
+</div>
+
+<script src="assets/js/registro-materia.js"></script>
+<script>
+  // Obtener parámetros de la URL
+  var urlParams = new URLSearchParams(window.location.search);
+  var estudiante = urlParams.get('nombre');
+  var idEstudiante = urlParams.get('id');
+  var materia = urlParams.get('materia');
+
+  // Insertar los datos en el contenido del comprobante
+  document.getElementById('estudiante').textContent = 'Estudiante: ' + estudiante;
+  document.getElementById('idEstudiante').textContent = 'ID: ' + idEstudiante;
+  document.getElementById('materia').textContent = 'Materia: ' + materia;
+</script>
+</body>
+</html>

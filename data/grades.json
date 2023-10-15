@@ -1,0 +1,50 @@
+{
+    "grades": [
+      {
+        "student_id": 1,
+        "course": "Estructuras Discretas",
+        "grade": 90
+      },
+      {
+        "student_id": 1,
+        "course": "Fundamentos de Matemáticas",
+        "grade": 85
+      },
+      {
+        "student_id": 1,
+        "course": "Álgebra Lineal",
+        "grade": 92
+      },
+      {
+        "student_id": 2,
+        "course": "Estructuras Discretas",
+        "grade": 88
+      },
+      {
+        "student_id": 2,
+        "course": "Álgebra Lineal",
+        "grade": 91
+      },
+      {
+        "student_id": 2,
+        "course": "Sistemas Digitales I",
+        "grade": 87
+      },
+      {
+        "student_id": 3,
+        "course": "Fundamentos de Matemáticas",
+        "grade": 89
+      },
+      {
+        "student_id": 3,
+        "course": "Álgebra Lineal",
+        "grade": 88
+      },
+      {
+        "student_id": 3,
+        "course": "Sistemas Digitales I",
+        "grade": 93
+      }
+    ]
+  }
+  

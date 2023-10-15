@@ -1,0 +1,104 @@
+{
+    "semesters": [
+      {
+        "semester": "1er semestre",
+        "courses": [
+          "Estructuras Discretas",
+          "Fundamentos de Matemáticas",
+          "Hardware y Software",
+          "Programación Básica",
+          "Técnicas de Investigación",
+          "Inglés I"
+        ]
+      },
+      {
+        "semester": "2do semestre",
+        "courses": [
+          "Álgebra Lineal",
+          "Sistemas Digitales I",
+          "Física I",
+          "Programación I",
+          "Sistemas Operativos I",
+          "Deontología y Prosocialidad"
+        ]
+      },
+      {
+        "semester": "3er semestre",
+        "courses": [
+          "Cálculo I",
+          "Sistemas Digitales II",
+          "Investigación Operativa I",
+          "Programación II",
+          "Taller de Sistemas Operativos I",
+          "Inglés II"
+        ]
+      },
+      {
+        "semester": "4to semestre",
+        "courses": [
+          "Contabilidad Empresarial I",
+          "Diseño Web I",
+          "Programación III",
+          "Base de Datos I",
+          "Redes I",
+          "Estadística Descriptiva"
+        ]
+      },
+      {
+        "semester": "5to semestre",
+        "courses": [
+          "Programación Web I",
+          "Desarrollo de Sistemas I",
+          "Estructuras de Datos",
+          "Base de Datos II",
+          "Sistemas Operativos II",
+          "Estadística Inferencial"
+        ]
+      },
+      {
+        "semester": "6to semestre",
+        "courses": [
+          "Programación Web II",
+          "Tecnología Web I",
+          "Administración de Base de Datos I",
+          "Sistemas de Información I",
+          "Diseño Web II",
+          "Redes II"
+        ]
+      },
+      {
+        "semester": "7mo semestre",
+        "courses": [
+          "Inteligencia Artificial I",
+          "Desarrollo de Sistemas II",
+          "Sistemas de Información II",
+          "Programación IV",
+          "Tecnología Web II",
+          "Electiva 1"
+        ]
+      },
+      {
+        "semester": "8vo semestre",
+        "courses": [
+          "Aplicaciones Móviles I",
+          "Ingeniería de Software I",
+          "Sistemas de Información III",
+          "Tecnología de Base de Datos I",
+          "Seguridad Informática I",
+          "Electiva 2"
+        ]
+      },
+      {
+        "semester": "9no semestre",
+        "courses": [
+          "Auditoría de Sistemas I",
+          "Inteligencia de Negocios",
+          "Ingeniería de Software II",
+          "Emprendedurismo",
+          "Electiva 3",
+          "Electiva 4"
+        ]
+      }
+    ]
+  }
+  
