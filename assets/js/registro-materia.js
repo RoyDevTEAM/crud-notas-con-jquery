@@ -1,26 +1,5 @@
 $(document).ready(function () {
-   // data.js
-   var estudiantesData = [
-    { id: 1, nombre: 'John Doe', apellido: 'Smith', ci: '12345', correo: 'john@example.com' },
-    { id: 2, nombre: 'Jane Smith', apellido: 'Doe', ci: '67890', correo: 'jane@example.com' },
-    { id: 3, nombre: 'Alice Johnson', apellido: 'Brown', ci: '54321', correo: 'alice@example.com' },
-    { id: 4, nombre: 'Bob Brown', apellido: 'Johnson', ci: '09876', correo: 'bob@example.com' },
-    { id: 5, nombre: 'Eve Davis', apellido: 'Wilson', ci: '11111', correo: 'eve@example.com' }
-  ];
-  
-  var materiasData = [
-    { semestre: 1, nombre: 'Estructuras Discretas' },
-    { semestre: 1, nombre: 'Fundamentos de Matemáticas' },
-    { semestre: 1, nombre: 'Hardware y Software' },
-    { semestre: 1, nombre: 'Programación Básica' },
-    { semestre: 1, nombre: 'Técnicas de Investigación' },
-    { semestre: 1, nombre: 'Inglés I' },
-    { semestre: 2, nombre: 'Álgebra Lineal' },
-    { semestre: 2, nombre: 'Sistemas Digitales I' },
-    { semestre: 2, nombre: 'Física I' },
-    { semestre: 2, nombre: 'Programación I' },
-    // Agrega las materias restantes aquí
-  ];
+   
   
 
     // Función para cargar las opciones de materias en el select

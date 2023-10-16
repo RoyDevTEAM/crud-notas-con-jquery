@@ -58,40 +58,65 @@ $(document).ready(function () {
         );
       });
     }
-  
-    // Función para guardar datos de estudiantes en localStorage
-    function guardarEstudiantesEnLocalStorage() {
-      localStorage.setItem('studentsData', JSON.stringify(studentsData));
+    function validarCI(ci) {
+      var regex = /^[0-9]+$/; // Esta expresión regular solo permite números
+      return regex.test(ci);
     }
-  
+    function validarNombre(nombre) {
+      var regex = /^[A-Za-z\s]+$/; // Esta expresión regular solo permite letras y espacios en blanco
+      return regex.test(nombre);
+    }
+        
     // Agregar o actualizar estudiante
-    function agregarOActualizarEstudiante(_id, nombre, apellido, ci, correo) {
-      if (estudianteEditando === null) {
-        // Agregar un nuevo estudiante
-        var newStudent = {
-          id: studentsData.length + 1,
-          nombre: nombre,
-          apellido: apellido,
-          ci: ci,
-          correo: correo
-        };
-        studentsData.push(newStudent);
-      } else {
-        // Actualizar el estudiante existente
-        var student = studentsData.find(s => s.id === estudianteEditando);
-        student.nombre = nombre;
-        student.apellido = apellido;
-        student.ci = ci;
-        student.correo = correo;
-        estudianteEditando = null;
-      }
-  
-      cargarEstudiantes();
-      $('#agregarEstudianteModal').modal('hide');
-      // Limpia el formulario
-      $('#student-form')[0].reset();
-      guardarEstudiantesEnLocalStorage();
-    }
+// Agregar o actualizar estudiante
+function agregarOActualizarEstudiante(_id, nombre, apellido, ci, correo) {
+  // Validar los campos antes de continuar
+  if (!validarNombre(nombre)) {
+    alert('Nombre inválido. Ingrese solo letras y espacios.');
+    return;
+  }
+  if (!validarCI(ci)) {
+    alert('Cédula de Identidad inválida. Ingrese solo números.');
+    return;
+  }
+
+  // Verificar si ya existe un estudiante con el mismo nombre, correo o cédula de identidad
+  var estudianteExistente = studentsData.find(function (student) {
+    return student.nombre === nombre || student.correo === correo || student.ci === ci;
+  });
+
+  if (estudianteExistente) {
+    alert('El estudiante ya existe en la base de datos.');
+    return;
+  }
+
+  if (estudianteEditando === null) {
+    // Agregar un nuevo estudiante
+    var newStudent = {
+      id: studentsData.length + 1,
+      nombre: nombre,
+      apellido: apellido,
+      ci: ci,
+      correo: correo
+    };
+    studentsData.push(newStudent);
+  } else {
+    // Actualizar el estudiante existente
+    var student = studentsData.find(s => s.id === estudianteEditando);
+    student.nombre = nombre;
+    student.apellido = apellido;
+    student.ci = ci;
+    student.correo = correo;
+    estudianteEditando = null;
+  }
+
+  cargarEstudiantes();
+  $('#agregarEstudianteModal').modal('hide');
+  // Limpia el formulario
+  $('#student-form')[0].reset();
+  guardarEstudiantesEnLocalStorage();
+}
+
   
     // Buscar estudiante por ID
     $('#buscarIdBtn').click(function () {
@@ -165,34 +190,67 @@ $(document).ready(function () {
         }
       });
     }
-    
-    // Filtro por semestre
-    $('#filtroSemestre').change(function () {
-      var semestreSeleccionado = parseInt($(this).val());
-      cargarMaterias(semestreSeleccionado);
-    });
-    
-    // Función para guardar las materias en el localStorage
-    function guardarMateriasEnLocalStorage() {
-      localStorage.setItem('materiasData', JSON.stringify(materiasData));
+    // Función para cargar materias en la tabla
+function cargarMaterias(semestreSeleccionado) {
+  $('#materias-table').empty();
+  materiasData.forEach(function (materia, index) {
+    if (semestreSeleccionado === materia.semestre) {
+      $('#materias-table').append(
+        `<tr>
+          <td>${materia.semestre}º Semestre</td>
+          <td>${materia.nombre}</td>
+          <td>
+            <button class="btn btn-info btn-editar" data-semestre="${materia.semestre}" data-nombre="${materia.nombre}">Editar</button>
+            <button class="btn btn-danger btn-eliminar" data-semestre="${materia.semestre}" data-nombre="${materia.nombre}">Eliminar</button>
+          </td>
+        </tr>`
+      );
     }
-    
-    // Agregar materia
-    $('#agregarMateriaBtn').click(function () {
-      var semestre = $('#semestre').val();
-      var nombreMateria = $('#nombreMateria').val();
-    
-      if (semestre && nombreMateria) {
-        // Agregar una nueva materia
-        materiasData.push({ semestre: parseInt(semestre), nombre: nombreMateria });
-        cargarMaterias(parseInt(semestre));
-        $('#agregarMateriaModal').modal('hide');
-        // Limpia el formulario
-        $('#materia-form')[0].reset();
-        // Guardar las materias en el localStorage
-        guardarMateriasEnLocalStorage();
-      }
+  });
+}
+
+// Filtro por semestre
+$('#filtroSemestre').change(function () {
+  var semestreSeleccionado = parseInt($(this).val());
+  cargarMaterias(semestreSeleccionado);
+});
+
+// Función para guardar las materias en el localStorage
+function guardarMateriasEnLocalStorage() {
+  localStorage.setItem('materiasData', JSON.stringify(materiasData));
+}
+
+$('#agregarMateriaBtn').click(function () {
+  var semestre = $('#semestre').val();
+  var nombreMateria = $('#nombreMateria').val();
+
+  if (semestre && nombreMateria) {
+    // Validar si ya existe una materia con el mismo nombre y semestre
+    var materiaDuplicada = materiasData.some(function (materia) {
+      return materia.semestre === parseInt(semestre) && materia.nombre === nombreMateria;
     });
+
+    // Contar el número de materias en el semestre seleccionado
+    var materiasEnSemestre = materiasData.filter(function (materia) {
+      return materia.semestre === parseInt(semestre);
+    });
+
+    if (materiaDuplicada) {
+      alert('Esta materia ya está registrada para este semestre.');
+    } else if (materiasEnSemestre.length >= 6) {
+      alert('No se pueden agregar más de 6 materias en un semestre.');
+    } else {
+      // Agregar una nueva materia
+      materiasData.push({ semestre: parseInt(semestre), nombre: nombreMateria });
+      cargarMaterias(parseInt(semestre));
+      $('#agregarMateriaModal').modal('hide');
+      // Limpia el formulario
+      $('#materia-form')[0].reset();
+      // Guardar las materias en el localStorage
+      guardarMateriasEnLocalStorage();
+    }
+  }
+});
     
     // Editar materia
     var materiaAEditar = null;
@@ -247,7 +305,7 @@ $(document).ready(function () {
       // Guardar las materias en el localStorage
       guardarMateriasEnLocalStorage();
     });
-    
+    //PARA REGIRAE MATERIA LOGICA 
     function cargarOpcionesMaterias() {
         var selectMaterias = $('#materia');
         selectMaterias.empty();
@@ -270,34 +328,42 @@ $(document).ready(function () {
           alert('Estudiante no encontrado');
         }
       });
-   // Registrar materia
-$('#registrarMateriaBtn').click(function () {
-    var idEstudiante = $('#idEstudiante').val();
-    var nombreEstudiante = $('#nombreEstudiante').val();
-    var materia = $('#materia').val();
+      $('#registrarMateriaBtn').click(function () {
+        var idEstudiante = $('#idEstudiante').val();
+        var nombreEstudiante = $('#nombreEstudiante').val();
+        var materia = $('#materia').val();
+        
+        if (idEstudiante && nombreEstudiante && materia) {
+            // Obtener los registros de materias del almacenamiento local o inicializar un arreglo vacío
+            var registrosMaterias = JSON.parse(localStorage.getItem('registrosMaterias')) || [];
     
-    if (idEstudiante && nombreEstudiante && materia) {
-        // Crear un objeto para representar el registro de materia
-        var registroMateria = {
-            idEstudiante: idEstudiante,
-            nombreEstudiante: nombreEstudiante,
-            materia: materia
-        };
-
-        // Obtener los registros de materias del almacenamiento local o inicializar un arreglo vacío
-        var registrosMaterias = JSON.parse(localStorage.getItem('registrosMaterias')) || [];
-
-        // Agregar el nuevo registro de materia al arreglo
-        registrosMaterias.push(registroMateria);
-
-        // Guardar los registros actualizados en el almacenamiento local
-        localStorage.setItem('registrosMaterias', JSON.stringify(registrosMaterias));
-
-        var url = `comprobante.html?id=${idEstudiante}&nombre=${nombreEstudiante}&materia=${materia}`;
-        window.location.href = url;
-    }
+            // Verificar si el estudiante ya ha registrado esta materia
+            var registroExistente = registrosMaterias.find(function (registro) {
+                return registro.idEstudiante === idEstudiante && registro.materia === materia;
+            });
     
-});
+            if (registroExistente) {
+                alert('Este estudiante ya ha registrado esta materia. Por favor, elija otra materia.');
+            } else {
+                // Crear un objeto para representar el registro de materia
+                var registroMateria = {
+                    idEstudiante: idEstudiante,
+                    nombreEstudiante: nombreEstudiante,
+                    materia: materia
+                };
+    
+                // Agregar el nuevo registro de materia al arreglo
+                registrosMaterias.push(registroMateria);
+    
+                // Guardar los registros actualizados en el almacenamiento local
+                localStorage.setItem('registrosMaterias', JSON.stringify(registrosMaterias));
+    
+                var url = `comprobante.html?id=${idEstudiante}&nombre=${nombreEstudiante}&materia=${materia}`;
+                window.location.href = url;
+            }
+        }
+    });
+    
 
     // Cargar materias iniciales
     cargarMaterias(1); // Mostrar materias del 1er semestre por defecto
